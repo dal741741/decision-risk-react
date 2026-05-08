@@ -10,8 +10,7 @@ const today = () => new Date().toISOString().split('T')[0];
 const initialScores: Scores = { DQ: 0, OV: 0, CA: 0, MS: 0 };
 const initialNotes: Notes = { DQ: '', OV: '', CA: '', MS: '' };
 
-export default function App() {
-  const [provider, setProvider] = useState<LlmProvider>('Arivue');
+export default function App() {  
   const [apiKey, setApiKey] = useState('');
   const [endpoint, setEndpoint] = useState('https://api.openai.com/v1/chat/completions');
   const [modelName, setModelName] = useState('gpt-4o-mini');
@@ -31,7 +30,7 @@ export default function App() {
   const [history, setHistory] = useState<RiskApiResponse[]>([]);
 
   const allScored = useMemo(() => Object.values(scores).every((value) => value > 0), [scores]);
-  const canEvaluate = context.decision.trim() && allScored && (provider === 'Arivue' || apiKey.trim());
+  const canEvaluate = context.decision.trim() && allScored && (context.model.trim() || apiKey.trim());
 
   const composite = useMemo(() => {
     const total = Object.values(scores).reduce((sum, value) => sum + value, 0);
@@ -66,8 +65,7 @@ export default function App() {
     const band = getBand(composite);
 
     try {
-      const aiText = await analyzeRisk({
-        provider,
+      const aiText = await analyzeRisk({        
         apiKey,
         endpoint,
         modelName,
@@ -83,7 +81,7 @@ export default function App() {
   decision: context.decision,
   industry: context.industry,
   model: context.model,
-
+  ai_analysis: context.model ==="Arivue" ? "": aiText,
   composite_score: composite,
 
   risk_band: band.name,
@@ -115,7 +113,7 @@ const MODELS = [
   "Arivue",
   "GPT-4"  
 ];
-  const modelLabel = provider === 'mock' ? 'Mock local analysis' : `${provider} · ${modelName}`;
+  const modelLabel = context.model === 'mock' ? 'Mock local analysis' : `${context.model} · ${modelName}`;
 
   return (
     <>
@@ -136,26 +134,7 @@ const MODELS = [
         </div>
       </section>
 
-      <main className="main">
-        {/* <div className="api-notice">
-          <strong>LLM Provider Setup.</strong> Use Mock mode to run without an API key, or choose Anthropic/OpenAI-compatible to call a real model. For production, route requests through your backend instead of exposing API keys in the browser.
-          <div className="llm-grid">
-            <select value={provider} onChange={(event) => {
-              const value = event.target.value as LlmProvider;
-              setProvider(value);
-              if (value === 'anthropic') setModelName('claude-sonnet-4-20250514');
-              if (value === 'openai-compatible') setModelName('gpt-4o-mini');
-            }}>
-              <option value="mock">Mock / Local</option>
-              <option value="anthropic">Anthropic Claude</option>
-              <option value="openai-compatible">OpenAI-compatible</option>
-            </select>
-            <input type="password" value={apiKey} onChange={(event) => setApiKey(event.target.value)} placeholder="API key" disabled={provider === 'mock'} />
-            <input value={modelName} onChange={(event) => setModelName(event.target.value)} placeholder="Model name" />
-            {provider === 'openai-compatible' && <input className="full-row" value={endpoint} onChange={(event) => setEndpoint(event.target.value)} placeholder="Endpoint URL" />}
-          </div>
-        </div> */}
-
+      <main className="main">        
         <div className="section-label">01 — Evaluation context</div>
         <div className="card">
           <div className="field-grid">

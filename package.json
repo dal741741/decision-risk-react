@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
+    "openai": "^6.37.0",
     "react": "latest",
     "react-dom": "latest",
     "typescript": "latest",

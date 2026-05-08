@@ -3,8 +3,7 @@ import type { EvaluationContext, Notes, Scores } from '../types/risk';
 
 export type LlmProvider = 'mock' | 'anthropic' | 'openai-compatible' | 'Arivue';
 
-export interface AnalyzeRiskInput {
-  provider: LlmProvider;
+export interface AnalyzeRiskInput {  
   apiKey: string;
   endpoint?: string;
   modelName: string;
@@ -48,18 +47,18 @@ Be specific and direct. No generic advice.`;
 }
 
 export async function analyzeRisk(input: AnalyzeRiskInput): Promise<string> {
-  if (input.provider === 'mock') {
+  if (input.context.model === 'mock') {
     return mockAnalysis(input);
   }
 
-   if (input.provider === 'Arivue') {
+   if (input.context.model === 'Arivue') {
     const result = await getRiskAnalysis(input);
     return result;
   }
 
   const prompt = buildRiskPrompt(input);
 
-  if (input.provider === 'anthropic') {
+  if (input.context.model === 'anthropic') {
     return callAnthropic(input, prompt);
   }
 
@@ -91,14 +90,14 @@ async function callAnthropic(input: AnalyzeRiskInput, prompt: string): Promise<s
 }
 
 async function callOpenAiCompatible(input: AnalyzeRiskInput, prompt: string): Promise<string> {
-  if (!input.apiKey.trim()) throw new Error('API key is required.');
+  
   if (!input.endpoint?.trim()) throw new Error('Endpoint is required for OpenAI-compatible providers.');
-
+  const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
   const response = await fetch(input.endpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer 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`
+      Authorization: `Bearer ${apiKey} `
     },
     body: JSON.stringify({
       model: input.modelName,
