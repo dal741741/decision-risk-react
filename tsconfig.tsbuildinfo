@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/historylist.tsx","./src/components/indicatorcard.tsx","./src/components/resultpanel.tsx","./src/data/rubrics.ts","./src/services/llmservice.ts","./src/types/risk.ts"],"errors":true,"version":"6.0.3"}
