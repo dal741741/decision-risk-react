@@ -49,8 +49,7 @@ input::placeholder { color:var(--text-3); }
 .star.a3 { background:#FAEEDA; border-color:#BA7517; color:#854F0B; }
 .star.a4 { background:#FAECE7; border-color:#D85A30; color:#993C1D; }
 .star.a5 { background:#FCEBEB; border-color:#E24B4A; color:#A32D2D; }
-.ind-score-label { font-family:var(--mono); font-size:11px; color:var(--text-3); margin-bottom:8px; }
-.ind-score-label span { color:var(--text); font-weight:500; }
+
 .ind-note { width:100%; font-size:12px; color:var(--text); background:var(--bg); border:0.5px solid var(--border); border-radius:7px; padding:6px 9px; outline:none; }
 .rubric-hint { margin-top:8px; margin-bottom:8px; font-size:11px; color:var(--text-3); line-height:1.5; }
 .cta-row { display:flex; gap:10px; margin-bottom:2rem; }
@@ -308,4 +307,46 @@ select:focus {
   backdrop-filter: blur(10px);
 
   border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+
+
+.ind-score-label span {
+  font-weight: 800;
+  color: #000;
+}
+
+.rubric-hint {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #5f746a;
+}
+.ind-note {
+  font-size: 15px;
+  font-weight: 500;
+  color: #10291f;
+}
+.indicator-card {
+  padding: 1.8rem;
+  border: 1px solid rgba(21, 71, 52, 0.18);
+
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.04);
+}
+.ind-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #10291f;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.ind-score-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #154734;
+}
+.star {
+  font-size: 16px;
+  font-weight: 700;
 }
