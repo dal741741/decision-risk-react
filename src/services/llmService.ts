@@ -137,7 +137,7 @@ Final recommendation: ${input.bandAction}.`;
 
 async function getRiskAnalysis(input: AnalyzeRiskInput): Promise<string> {
 
-  const response = await fetch("http://127.0.0.1:8000/evaluate", {
+  const response = await fetch("https://decision-risk-api.vercel.app/evaluate", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
